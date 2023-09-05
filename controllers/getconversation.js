@@ -18,7 +18,12 @@ async function getconversation(req,resp){
            }
            const conversation_id=user_acc.friends[friend_index].friend.id;
            const conversation_info=await conversation.findOne({_id:conversation_id})
+           if(conversation_info.chat.length<10){
            resp.json({chat:conversation_info.chat})
+           }
+           else{
+            resp.json({chat:conversation_info.chat.slice(conversation_info.chat.length-11)})
+           }
         }
         else{resp.json({status:"wrong password"})}
     }else{resp.json({status:"invalid user id"})}
